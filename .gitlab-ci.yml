@@ -7,13 +7,17 @@ build:
   image: docker:latest
   services:
     - docker:dind
+  tags:
+    - counter-runner
   script:
-    - docker build -t counter-app.app
+    - docker build -t counter-app .
   only:
     - main
 
 deploy:
   stage: deploy
+  tags:
+    - counter-runner
   script:
     - echo "Deploy to server"
     - docker compose down || true
