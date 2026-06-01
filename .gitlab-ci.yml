@@ -1,0 +1,22 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t counter-app.app
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy to server"
+    - docker compose down || true
+    - docker compose up -d --build
+  only:
+    - main
